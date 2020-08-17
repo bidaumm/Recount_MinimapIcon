@@ -2,7 +2,7 @@
 ## Title: Recount Minimap Icon|cff7fff7f -Ace2-|r
 ## Notes: Adds an icon to the minimap for Recount
 ## Version: 1.03
-## Author: Tetsuos
+## Author: bidaumm (using basecode from  Tetsuos on CurseForge) 
 ## Dependencies: Recount
 ## SavedVariables: RecountButton_Position, RecountButton_Locked
 
