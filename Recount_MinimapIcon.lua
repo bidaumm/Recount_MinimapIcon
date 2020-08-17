@@ -22,7 +22,7 @@ function Recount_MinimapIcon_SetMinimap()
     Minimap_Circle.X = getglobal("Minimap"):GetWidth()+20;
     Minimap_Circle.Y = getglobal("Minimap"):GetHeight()+20;
     
-    getglobal("Recount_ButtonLock_Text"):SetText("Lock");
+    getglobal("Recount_ButtonLock_Text"):SetText("Lock Button");
     getglobal("Recount_ButtonConfig_Text"):SetText("Show Config");
     getglobal("Recount_ButtonReset_Text"):SetText("Reset Data");
 end
