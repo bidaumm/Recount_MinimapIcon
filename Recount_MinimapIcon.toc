@@ -1,0 +1,10 @@
+## Interface: 20100
+## Title: Recount Minimap Icon|cff7fff7f -Ace2-|r
+## Notes: Adds an icon to the minimap for Recount
+## Version: 1.03
+## Author: Tetsuos
+## Dependencies: Recount
+## SavedVariables: RecountButton_Position, RecountButton_Locked
+
+Recount_MinimapIcon.xml
+Recount_MinimapIcon.lua

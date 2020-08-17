@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/  ..\FrameXML\UI.xsd">
+   <Frame name="Recount_MinimapIcon_Load" hidden="true" enableMouse="false" movable="false">
+      <Scripts>
+         <OnEvent>if (event == "VARIABLES_LOADED") then 
+					Recount_MinimapIcon_OnLoad(); 
+				end</OnEvent>
+      </Scripts>
+      <Size>
+         <AbsDimension x="1" y="1" />
+      </Size>
+      <Anchors>
+         <Anchor point="TOPLEFT" />
+      </Anchors>
+   </Frame>
+   <Button name="Recount_IconButton" toplevel="true" frameStrata="LOW" parent="Minimap" enableMouse="true" movable="true" hidden="false">
+      <Size>
+         <AbsDimension x="33" y="33" />
+      </Size>
+      <Anchors>
+         <Anchor point="TOPLEFT">
+            <Offset>
+               <AbsDimension x="-15" y="0" />
+            </Offset>
+         </Anchor>
+      </Anchors>
+      <Layers>
+         <Layer level="BACKGROUND">
+            <Texture name="Recount_IconButton_Icon" file="Interface\AddOns\Recount_MinimapIcon\textures\icon-passive">
+               <Size>
+                  <AbsDimension x="21" y="21" />
+               </Size>
+               <Anchors>
+                  <Anchor point="TOPLEFT">
+                     <Offset>
+                        <AbsDimension x="7" y="-6" />
+                     </Offset>
+                  </Anchor>
+               </Anchors>
+               <TexCoords left="0.075" right="0.925" top="0.075" bottom="0.925" />
+            </Texture>
+         </Layer>
+         <Layer level="OVERLAY">
+            <Texture file="Interface\Minimap\MiniMap-TrackingBorder">
+               <Size>
+                  <AbsDimension x="56" y="56" />
+               </Size>
+               <Anchors>
+                  <Anchor point="TOPLEFT" />
+               </Anchors>
+            </Texture>
+         </Layer>
+      </Layers>
+      <HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight" />
+      <Scripts>
+         <OnLoad>this:RegisterForClicks("LeftButtonUp","RightButtonUp");
+				this:RegisterForDrag("LeftButton");
+                this.locked = false;</OnLoad>
+         <OnEnter>Recount_MinimapIcon_ShowTooltip();
+                Recount_MinimapIcon_SetMinimap();</OnEnter>
+         <OnMouseDown>Recount_IconButton_Icon:SetTexCoord(0,1,0,1);</OnMouseDown>
+         <OnMouseUp>Recount_IconButton_Icon:SetTexCoord(.075,.925,.075,.925);</OnMouseUp>
+         <OnLeave>GameTooltip:Hide()</OnLeave>
+         <OnDragStart>if (not this.locked) then
+                    this.being_dragged = true;
+                    this:LockHighlight();
+                    self:StartMoving();
+                end</OnDragStart>
+         <OnDragStop>this.being_dragged = false;
+				this:UnlockHighlight();
+                self:StopMovingOrSizing();
+				Recount_IconButton_Icon:SetTexCoord(.075,.925,.075,.925);</OnDragStop>
+         <OnClick>Recount_IconButton_OnClick(arg1);
+				Recount_IconButton_Icon:SetTexCoord(.075,.925,.075,.925);</OnClick>
+         <OnEvent>Recount_MinimapIcon_UpdatePosition();</OnEvent>
+         <OnUpdate>if (this.being_dragged and not this.locked) then
+                    Recount_MinimapIcon_Drag();
+                end</OnUpdate>
+      </Scripts>
+   </Button>
+   <Button name="Recount_ButtonTemplate" virtual="true">
+      <Size>
+         <AbsDimension x="75" y="16" />
+      </Size>
+      <Layers>
+         <Layer level="ARTWORK">
+            <FontString name="$parent_Text" inherits="GameFontWhite">
+               <Size>
+                  <AbsDimension x="75" y="16" />
+               </Size>
+               <Anchors>
+                  <Anchor point="TOP">
+                     <Offset>
+                        <AbsDimension x="0" y="0" />
+                     </Offset>
+                  </Anchor>
+               </Anchors>
+            </FontString>
+         </Layer>
+      </Layers>
+      <Scripts>
+         <OnEnter />
+         <OnLeave />
+      </Scripts>
+      <HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD">
+         <Size>
+            <AbsDimension x="75" y="16" />
+         </Size>
+         <Anchors>
+            <Anchor point="TOP">
+               <Offset>
+                  <AbsDimension x="0" y="0" />
+               </Offset>
+            </Anchor>
+         </Anchors>
+      </HighlightTexture>
+   </Button>
+   <Frame name="Recount_MinimapFrame" hidden="true" toplevel="true" frameStrata="DIALOG" parent="UIParent">
+      <Size>
+         <absDimension x="80" y="75" />
+      </Size>
+      <Anchors>
+         <Anchor point="RIGHT" relativePoint="BOTTOMLEFT" relativeTo="Recount_IconButton">
+            <Offset>
+               <AbsDimension x="5" y="5" />
+            </Offset>
+         </Anchor>
+      </Anchors>
+      <Backdrop bgfile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+         <TileSize>
+            <AbsValue val="32" />
+         </TileSize>
+         <EdgeSize>
+            <AbsValue val="16" />
+         </EdgeSize>
+         <BackgroundInsets>
+            <AbsInset left="5" right="5" top="5" bottom="5" />
+         </BackgroundInsets>
+      </Backdrop>
+      <Frames>
+         <Button name="Recount_ButtonLock" inherits="Recount_ButtonTemplate" id="1">
+            <Anchors>
+               <Anchor point="TOPLEFT" relativeTo="Recount_MinimapFrame">
+                  <Offset>
+                     <AbsDimension x="2" y="-5" />
+                  </Offset>
+               </Anchor>
+            </Anchors>
+            <Scripts>
+               <OnClick>if (Recount_IconButton.locked) then
+                            Recount_IconButton.locked = false;
+                            RecountButton_Locked = false;
+                            Recount_MinimapFrame:Hide();
+                        else
+                            Recount_IconButton.locked = true;
+                            RecountButton_Locked = true;
+                            Recount_MinimapFrame:Hide();
+                        end</OnClick>
+            </Scripts>
+         </Button>
+         <Button name="Recount_ButtonConfig" inherits="Recount_ButtonTemplate" id="2">
+            <Anchors>
+               <Anchor point="TOP" relativeTo="Recount_ButtonLock">
+                  <Offset>
+                     <AbsDimension x="0" y="-20" />
+                  </Offset>
+               </Anchor>
+            </Anchors>
+            <Scripts>
+               <OnClick>Recount:ShowConfig();
+                        Recount_MinimapFrame:Hide()</OnClick>
+            </Scripts>
+         </Button>
+         <Button name="Recount_ButtonReset" inherits="Recount_ButtonTemplate" id="2">
+            <Anchors>
+               <Anchor point="TOP" relativeTo="Recount_ButtonConfig">
+                  <Offset>
+                     <AbsDimension x="0" y="-20" />
+                  </Offset>
+               </Anchor>
+            </Anchors>
+            <Scripts>
+               <OnClick>Recount:ResetData();
+                        Recount_MinimapFrame:Hide();</OnClick>
+            </Scripts>
+         </Button>
+      </Frames>
+      <Scripts>
+         <OnUpdate>if (Recount_IconButton.locked) then
+                    getglobal("Recount_ButtonLock_Text"):SetText("Un-Lock");
+                else
+                    getglobal("Recount_ButtonLock_Text"):SetText("Lock");
+                end</OnUpdate>
+         <OnEnter />
+         <OnLeave />
+      </Scripts>
+   </Frame>
+</Ui>
