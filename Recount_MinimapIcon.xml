@@ -117,7 +117,7 @@
    </Button>
    <Frame name="Recount_MinimapFrame" hidden="true" toplevel="true" frameStrata="DIALOG" parent="UIParent">
       <Size>
-         <absDimension x="80" y="75" />
+         <absDimension x="85" y="75" />
       </Size>
       <Anchors>
          <Anchor point="RIGHT" relativePoint="BOTTOMLEFT" relativeTo="Recount_IconButton">
@@ -140,9 +140,9 @@
       <Frames>
          <Button name="Recount_ButtonLock" inherits="Recount_ButtonTemplate" id="1">
             <Anchors>
-               <Anchor point="TOPLEFT" relativeTo="Recount_MinimapFrame">
+               <Anchor point="TOP" relativeTo="Recount_MinimapFrame">
                   <Offset>
-                     <AbsDimension x="2" y="-5" />
+                     <AbsDimension x="0" y="-8" />
                   </Offset>
                </Anchor>
             </Anchors>
@@ -187,9 +187,9 @@
       </Frames>
       <Scripts>
          <OnUpdate>if (Recount_IconButton.locked) then
-                    getglobal("Recount_ButtonLock_Text"):SetText("Un-Lock");
+                    getglobal("Recount_ButtonLock_Text"):SetText("Unlock Button");
                 else
-                    getglobal("Recount_ButtonLock_Text"):SetText("Lock");
+                    getglobal("Recount_ButtonLock_Text"):SetText("Lock Button");
                 end</OnUpdate>
          <OnEnter />
          <OnLeave />
